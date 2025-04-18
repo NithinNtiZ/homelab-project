@@ -1,0 +1,141 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid" : "",
+			"Effect": "Allow",
+			"Action": [
+				"s3:*",
+				"ec2:Describe*",
+				"ec2:Get*",
+				"ec2:List*",
+				"ec2:*SecurityGroup*",
+				"ec2:*NetworkAcl*",
+				"ec2:*Route*",
+				"ec2:*volume*",
+				"ec2:*LaunchTemplate*",
+				"ec2:*Vpc",
+				"ec2:RunInstances",
+				"ec2:Create*",
+				"aws-marketplace:*",
+				"license-manager:*"
+			],
+			"Resource": "*"
+		},
+		{
+			"Sid": "IamReadOnlyaccess",
+			"Effect": "Allow",
+			"Action": [
+				"iam:GenerateCredentialReport",
+				"iam:GenerateServiceLastAccessedDetails",
+				"iam:Get*",
+				"iam:List*",
+				"iam:SimulateCustomPolicy",
+				"iam:SimulatePrincipalPolicy"
+			],
+			"Resource": "*"
+		},
+		{
+			"Sid" : "",
+			"Effect": "IamUserownAllow",
+			"Action": [
+				"iam:Create*",
+				"iam:update*",
+				"iam:Delete*",
+				"iam:Enable*",
+				"iam:Get*",
+				"iam:List*",
+				"iam:ChangePassword",
+				"iam:DeactivateMFADevice",
+				"iam:UploadSSHPublicKey",
+				"iam:ResetServiceSpecificCredential"
+			],
+			"Resource": "arn:aws:iam::081938466928:user/${aws:username}"
+		},
+		{
+			"Sid": "IamDeny",
+			"Effect": "Deny",
+			"Action": [
+				"iam:CreateUser",
+				"iam:CreateGroup",
+				"iam:CreateRole",
+				"iam:CreatePolicy",
+				"iam:CreatePolicyVersion",
+				"iam:DeleteUser",
+				"iam:DeleteGroup",
+				"iam:DeleteRole",
+				"iam:DeletePolicy",
+				"iam:DeletePolicyVersion",
+				"iam:DeleteAccountPasswordPolicy"
+			],
+			"Resource": "*"
+		},
+		{
+			"Sid": "EC2InstanceConnect",
+			"Action": [
+				"ec2:DescribeInstances",
+				"ec2-instance-connect:SendSerialConsoleSSHPublicKey",
+				"ec2-instance-connect:SendSSHPublicKey"
+			],
+			"Effect": "Allow",
+			"Resource": "*"
+		},
+		{
+			"Sid": "EnfoceTagging",
+			"Effect": "Deny",
+			"Action": [
+				"ec2:CreateVolume",
+				"ec2:RunInstances",
+				"s3:CreateBucket"
+			],
+			"Resource": [
+				"arn:aws:ec2:*:081938466928:instance/*"
+			],
+			"Condition": {
+				"StringNotEquals": {
+					"aws:RequestTag/Team": "true",
+					"aws:RequestTag/CreatedBy": "true",
+					"aws:RequestTag/CreatedOn": "true",
+					"aws:RequestTag/Email": "true",
+					"aws:RequestTag/LeaseDuration": "true",
+					"aws:RequestTag/Environment": "true",
+					"aws:RequestTag/Product": "true",
+					"aws:RequestTag/Version": "true",
+					"aws:RequestTag/Location": "true",
+					"aws:RequestTag/Purpose": "true"
+				},
+				"ForAllValues:StringNotEquals": {
+					"aws:TagKeys": [
+						"Team",
+						"CreatedBy",
+						"CreatedOn",
+						"Email",
+						"LeaseDuration",
+						"Environment",
+						"Product",
+						"Version",
+						"Location",
+						"Purpose"
+					]
+				}
+			}
+		},
+		{
+			"Sid": "donotterminate",
+			"Effect": "Allow",
+			"Action": [
+				"ec2:TerminateInstances"
+			],
+			"Resource": [
+				"arn:aws:ec2:*:081938466928:instance/*"
+			],
+			"Condition": {
+				"StringEquals": {
+					"aws:ResourceTag/Environment": [
+						"Testing"
+					]
+				}
+			}
+		}
+	]
+}
