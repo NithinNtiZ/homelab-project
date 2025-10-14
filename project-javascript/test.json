@@ -1,0 +1,10 @@
+[{
+    "name"  : "nithin",
+    "age"   : 32,
+    "location" : ["India","America"]
+},
+{
+    "name"  : "sasi",
+    "age"   : 500,
+    "location" : ["India","America"]
+}]

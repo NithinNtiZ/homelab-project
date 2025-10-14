@@ -1,0 +1,45 @@
+$TTL 1W
+@	IN	SOA	ns1.supportlab.local.	root (
+			2019070700	; serial
+			3H		; refresh (3 hours)
+			30M		; retry (30 minutes)
+			2W		; expiry (2 weeks)
+			1W )		; minimum (1 week)
+	IN	NS	ns1.supportlab.local.
+	IN	MX 10	smtp.supportlab.local.
+;
+;
+ns1.supportlab.local.		IN	A	10.0.0.1
+smtp.supportlab.local.		IN	A	10.0.0.1
+;
+helper.supportlab.local.		IN	A	10.0.0.1
+helper.ocp4.supportlab.local.	IN	A	10.0.0.1
+;
+api.ocp4.supportlab.local.		IN	A	10.0.0.1
+api-int.ocp4.supportlab.local.	IN	A	10.0.0.1 
+;
+*.apps.ocp4.supportlab.local.	IN	A	10.0.0.1
+;
+bootstrap.ocp4.supportlab.local.	IN	A	10.0.0.200
+;
+master0.ocp4.supportlab.local.	IN	A	10.0.0.201
+master1.ocp4.supportlab.local.	IN	A	10.0.0.202 
+master2.ocp4.supportlab.local.	IN	A	10.0.0.203 
+;
+worker0.ocp4.supportlab.local.	IN	A	10.0.0.211 
+worker1.ocp4.supportlab.local.	IN	A	10.0.0.212
+worker3.ocp4.supportlab.local.	IN	A	10.0.0.213
+;
+; ETCD Cluster
+etcd-0.ocp4.supportlab.local.    IN    A     10.0.0.201
+etcd-1.ocp4.supportlab.local.    IN    A     10.0.0.202
+etcd-2.ocp4.supportlab.local.    IN    A     10.0.0.203
+
+; OpenShift Internal SRV records (cluster name = lab)
+_etcd-server-ssl._tcp.ocp4.supportlab.local.    86400     IN    SRV     0    10    2380    etcd-0.ocp4
+_etcd-server-ssl._tcp.ocp4.supportlab.local.    86400     IN    SRV     0    10    2380    etcd-1.ocp4
+_etcd-server-ssl._tcp.ocp4.supportlab.local.    86400     IN    SRV     0    10    2380    etcd-2.ocp4
+
+oauth-openshift.apps.ocp4.supportlab.local.     IN     A     10.0.0.1
+console-openshift-console.apps.ocp4.supportlab.local.     IN     A     10.0.0.1
+;EOF

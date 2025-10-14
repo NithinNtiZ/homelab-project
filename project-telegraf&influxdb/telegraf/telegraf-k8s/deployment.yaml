@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf
+  labels:
+    app: telegraf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegraf
+  template:
+    metadata:
+      labels:
+        app: telegraf
+    spec:
+      containers:
+        - name: telegraf
+          image: telegraf
+          ports:
+            - containerPort: 8125
+              protocol: UDP
+          env:
+            - name: INFLUX_TOKEN  # Create token from influxdb first
+              valueFrom:
+                secretKeyRef:
+                  name: telegraf-secret
+                  key: INFLUX_TOKEN
+          volumeMounts:
+            - name: telegraf-config
+              mountPath: /etc/telegraf/telegraf.conf
+              subPath: telegraf.conf
+              readOnly: true
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+      volumes:
+        - name: telegraf-config
+          configMap:
+            name: telegraf-config

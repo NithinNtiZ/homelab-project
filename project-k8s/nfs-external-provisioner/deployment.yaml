@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-client-provisioner
+  labels:
+    app: nfs-client-provisioner
+  namespace: test # replace with namespace where provisioner is deployed
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          image: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: supportlab.com/nfs-subdir-external-provisioner
+            - name: NFS_SERVER
+              value: 10.192.36.9 #change this
+            - name: NFS_PATH
+              value: /mnt/pvc # change this
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 10.192.36.9 # change this
+            path: /mnt/pvc # change this

@@ -1,0 +1,23 @@
+$TTL 1W
+@   IN  SOA ns1.supportlab.local. root.supportlab.local. (
+        2019070701 ; serial
+        3H
+        30M
+        2W
+        1W )
+    IN  NS  ns1.supportlab.local.
+
+1   IN  PTR ns1.supportlab.local.
+1   IN  PTR smtp.supportlab.local.
+1   IN  PTR helper.supportlab.local.
+1   IN  PTR helper.ocp4.supportlab.local.
+1   IN  PTR api.ocp4.supportlab.local.
+1   IN  PTR api-int.ocp4.supportlab.local.
+1   IN  PTR *.apps.ocp4.supportlab.local. ; wildcard PTR not normally valid, optional
+
+200 IN  PTR bootstrap.ocp4.supportlab.local.
+201 IN  PTR master0.ocp4.supportlab.local.
+202 IN  PTR master1.ocp4.supportlab.local.
+203 IN  PTR master2.ocp4.supportlab.local.
+211 IN  PTR worker0.ocp4.supportlab.local.
+212 IN  PTR worker1.ocp4.supportlab.local.

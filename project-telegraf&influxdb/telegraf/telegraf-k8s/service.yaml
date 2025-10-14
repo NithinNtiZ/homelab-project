@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: telegraf
+spec:
+  selector:
+    app: telegraf
+  ports:
+    - name: statsd
+      protocol: UDP
+      port: 8125
+      targetPort: 8125

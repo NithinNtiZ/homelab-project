@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb2-service
+spec:
+  # type: LoadBalancer       # Change to LoadBalancer if you need direct external access
+  selector:
+    app: influxdb2
+  ports:
+    - protocol: TCP
+      port: 443         # exposed service port
+      targetPort: 8086   # container port

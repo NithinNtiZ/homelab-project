@@ -1,0 +1,23 @@
+module "k8_instances" {
+    source = ".//module-1"
+    region                          = "us-west-1"
+    vm_count                        = "2"
+    # availability_zone               = "usw1-az3"
+    availability_zone               = "us-west-1a"
+    cidr_block                      = "10.0.0.0/16"
+    cidr_block_0                    = "0.0.0.0/0"
+    cidr_block_sbnt                 = "10.0.1.0/24"
+    instance_type                   = "t3.medium"
+    ami                             = "ami-0ce2cb35386fc22e9"
+    name_vm                         = "labadmin-k8-test-uswest-ec2"
+    name_vpc                        = "labadmin-k8-test-uswest-vpc-01"
+    name_subnet                     = "labadmin-k8-test-uswest-subnet-01"
+    name_rt                         = "labadmin-k8-test-uswest-rt-01"
+    name_ig                         = "labadmin-k8-test-uswest-igw-01"
+    name_PubIP                      = "labadmin-k8-test-uswest-PubIP-01"
+    name_sg                         = "labadmin-k8-test-uswest-nsg-01"
+    name_nacl                       = "labadmin-k8-test-uswest-nacl-01"
+    name_ebs                       = "labadmin-k8-test-uswest-ebs-01"
+    keypair                         = "labadmin-k8-test-uswest-keypair-01"	
+  
+}

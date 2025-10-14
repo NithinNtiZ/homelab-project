@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins/jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - .\data\certs\client:/certs/client
+      - .\data\home:/var/jenkins_home

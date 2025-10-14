@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb2
+  template:
+    metadata:
+      labels:
+        app: influxdb2
+    spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+      containers:
+        - name: influxdb2
+          image: influxdb:2
+          ports:
+            - containerPort: 8086
+          volumeMounts:
+            - name: influxdb2-data
+              mountPath: /var/lib/influxdb2
+            - name: influxdb2-config
+              mountPath: /etc/influxdb2
+      volumes:
+        - name: influxdb2-data
+          persistentVolumeClaim:
+            claimName: influxdb2-data
+        - name: influxdb2-config
+          persistentVolumeClaim:
+            claimName: influxdb2-config
