@@ -1,0 +1,7 @@
+flask 
+pyjwt 
+requests 
+cryptography 
+msal 
+keyring 
+python-dotenv
